@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="auto_backup_key">auto_backup</string>
+    <string name="backup_frequency_key">backup_frequency</string>
+    <string name="backup_time_key">backup_time</string>
+
+    <string name="notification_key">notification</string>
+    <string name="notification_frequency_key">notification_frequency</string>
+    <string name="notification_time">notification_time</string>
+</resources>

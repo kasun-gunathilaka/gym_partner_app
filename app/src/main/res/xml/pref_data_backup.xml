@@ -1,0 +1,44 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="@string/auto_backup_key"
+        android:title="@string/pref_title_auto_backup" />
+
+    <ListPreference
+        android:defaultValue="-1"
+        android:dependency="@string/auto_backup_key"
+        android:entries="@array/pref_backup_frequency_title"
+        android:entryValues="@array/pref_backup_frequency_values"
+        android:key="@string/backup_frequency_key"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_auto_backup_frequency" />
+
+    <ListPreference
+        android:defaultValue="-1"
+        android:dependency="@string/auto_backup_key"
+        android:entries="@array/pref_backup_time_title"
+        android:entryValues="@array/pref_backup_time_values"
+        android:key="@string/backup_time_key"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_auto_backup_time" />
+
+    <Preference
+        android:title="Create Backup Now"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:key="backupNow"
+        />
+
+    <Preference
+        android:title="Restore Backup"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:key="backup"
+        />
+
+
+
+</PreferenceScreen>

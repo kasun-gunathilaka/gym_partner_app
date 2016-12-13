@@ -1,0 +1,26 @@
+<resources>
+
+    <style name="NoActionBarAppTheme" parent="Base.NoActionBarAppTheme">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="CustomDialogAppTheme" parent="Base.CustomDialogAppTheme">
+        <item name="android:buttonBarPositiveButtonStyle">
+            @style/Base.AlertDialogPositiveButtonAppTheme
+        </item>
+    </style>
+
+    <style name="DialogAppTheme" parent="Base.DialogAppTheme">
+        <item name="android:buttonBarPositiveButtonStyle">
+            @style/Base.AlertDialogPositiveButtonAppTheme
+        </item>
+    </style>
+
+    <style name="AppTheme" parent="Base.AppTheme">
+        <item name="android:actionBarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="android:toolbarStyle">@style/ThemeOverlay.AppCompat.Light</item>
+    </style>
+
+
+</resources>

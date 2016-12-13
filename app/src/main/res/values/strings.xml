@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name">Gym Partner</string>
+    <string-array name="blood_types">
+        <item>O+</item>
+        <item>O-</item>
+        <item>A+</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B-</item>
+        <item>AB+</item>
+        <item>AB-</item>
+    </string-array>
+    <string-array name="symptom_status">
+        <item>Normal</item>
+        <item>Priority</item>
+        <item>Critical</item>
+    </string-array>
+
+    <string name="btnYes">YES</string>
+    <string name="btnNo">NO</string>
+    <string name="btnRenew">RENEW</string>
+    <string name="btnEdit">Edit</string>
+    <string name="btnOK">OK</string>
+    <string name="btnDismiss">DISMISS</string>
+
+    <string name="titleWarring">Warring</string>
+    <string name="titleConfirm">Confirmation</string>
+    <string name="titleError">Error</string>
+
+    <string name="confirmationExitMessage">Do you want to exit from the application ?</string>
+    <string name="confirmationDeleteEmergencyContact">Do you want to remove this contact ?</string>
+    <string name="confirmationDeleteSymptom">Do you want to remove the symptom ?</string>
+    <string name="confirmationDeleteSubscription">Do you want to remove the subscription ?</string>
+    <string name="confirmationDeleteMember">Do you want to remove the member ?</string>
+
+
+    <string name="warringNoSubscription">There is no subscriptions, Please add a subscription before adding a member</string>
+
+    <string name="errorMemberAlreadyExist">Member with NIC already exist</string>
+    <string name="errorMemberSavedFailed">Member creation error</string>
+    <string name="errorSubscriptionDeleteFailed">Cannot delete subscription. Subscription is associate with memberships</string>
+    <string name="errorMemberDeleteFailed">Cannot delete member. Member is associate with memberships</string>
+    <string name="search_hint">Search</string>
+    <string name="at">\@</string>
+    <string name="db_file_path">/data/data/com.kasungunathilaka.gympartner/databases/GymPartnerdb</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="message_expired_membership_sms">Your gym membership expired. Please renew as soon as you can. Thank you</string>
+    <string name="developer_email">developer.kasun.gunathilaka@gmail.com</string>
+
+
+</resources>
