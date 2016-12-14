@@ -27,7 +27,6 @@
         android:id="@+id/rvMemberList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"
         android:scrollbars="vertical" />
 
 </RelativeLayout>

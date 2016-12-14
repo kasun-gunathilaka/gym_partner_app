@@ -15,20 +15,18 @@
 <!--limitations under the License.-->
 <!--</license>-->
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    card_view:cardCornerRadius="2dp"
-    card_view:cardUseCompatPadding="true">
+    app:cardCornerRadius="0dp"
+    app:cardElevation="1.5dp"
+    android:layout_marginBottom="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
+        android:orientation="horizontal"
+        android:layout_margin="10dp"
         android:gravity="center_vertical">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -41,9 +39,10 @@
             android:id="@+id/tvCardListMemberCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#000000"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textStyle="bold"
-            android:textAppearance="?attr/textAppearanceListItem"/>
+            android:textSize="25sp"/>
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

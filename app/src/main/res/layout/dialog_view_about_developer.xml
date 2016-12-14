@@ -81,7 +81,7 @@
                 android:padding="5dp"
                 android:textColor="@color/Blue"
                 android:text="@string/developer_email"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textSize="13sp" />
 
         </LinearLayout>
 

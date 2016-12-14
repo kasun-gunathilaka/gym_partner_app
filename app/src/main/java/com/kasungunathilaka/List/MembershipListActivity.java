@@ -1,6 +1,7 @@
 package com.kasungunathilaka.List;
 
 //region Imported
+
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
@@ -9,12 +10,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SearchRecentSuggestionsProvider;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.SearchRecentSuggestions;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -258,14 +259,21 @@ public class MembershipListActivity extends AppCompatActivity implements Members
                         final AlertDialog.Builder builder = new AlertDialog.Builder(MembershipListActivity.this, R.style.Base_CustomDialogAppTheme);
                         builder.setTitle("Warring!");
                         builder.setMessage(R.string.warringNoSubscription);
-                        builder.setPositiveButton("", new DialogInterface.OnClickListener() {
+                        builder.setPositiveButton("Go to Subscription", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.cancel();
                             }
                         });
-                        builder.show();
-                        startActivity(new Intent(MembershipListActivity.this, SubscriptionListActivity.class));
+                        final AlertDialog dialog = builder.create();
+                        dialog.show();
+                        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                                startActivity(new Intent(MembershipListActivity.this, SubscriptionListActivity.class));
+                            }
+                        });
                     } else if (memberList.size() < 1) {
                         option = new CharSequence[]{"New Member"};
                         final AlertDialog.Builder builder = new AlertDialog.Builder(MembershipListActivity.this, R.style.Base_CustomDialogAppTheme);

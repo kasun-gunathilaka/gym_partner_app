@@ -1,6 +1,7 @@
 package com.kasungunathilaka.adapter;
 
 //region Imported
+
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -55,24 +56,16 @@ public class MemberDataAdapter extends RecyclerView.Adapter<MemberDataAdapter.Vi
     private List<Member> originalData = null;
     private MemberFilter memberFilter = new MemberFilter();
 
-    @Override
-    public Filter getFilter() {
-        return memberFilter;
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(Member member);
-    }
-
-    public interface OnItemLongClickListener {
-        void OnItemLongClickListener(Member member);
-    }
-
     public MemberDataAdapter(ArrayList<Member> memberList, OnItemClickListener listener, OnItemLongClickListener longListener) {
         this.memberList = memberList;
         this.originalData = memberList;
         this.listener = listener;
         this.longListener = longListener;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return memberFilter;
     }
 
     @Override
@@ -101,6 +94,14 @@ public class MemberDataAdapter extends RecyclerView.Adapter<MemberDataAdapter.Vi
         return memberList.size();
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(Member member);
+    }
+
+    public interface OnItemLongClickListener {
+        void OnItemLongClickListener(Member member);
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView ivCardListMemberPic;
@@ -114,9 +115,13 @@ public class MemberDataAdapter extends RecyclerView.Adapter<MemberDataAdapter.Vi
         }
 
         public void bind(final Member member, final OnItemClickListener listener, final OnItemLongClickListener longListener) {
-            if (member.getImage() != null)
+            if (member.getImage() != null) {
                 ivCardListMemberPic.setImageBitmap(BitmapFactory.decodeByteArray(member.getImage()
                         , 0, member.getImage().length));
+            } else {
+                ivCardListMemberPic.setImageResource(R.drawable.avatar);
+            }
+
 
             tvCardListMemberCode.setText(member.getName());
             itemView.setOnClickListener(new View.OnClickListener() {
