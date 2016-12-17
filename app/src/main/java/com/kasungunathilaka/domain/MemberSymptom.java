@@ -29,7 +29,9 @@ package com.kasungunathilaka.domain;
 // limitations under the License.
 // </license>
 
-public class MemberSymptom {
+import java.io.Serializable;
+
+public class MemberSymptom implements Serializable {
 
     //region Class Member
     private int memberSymptomsId;

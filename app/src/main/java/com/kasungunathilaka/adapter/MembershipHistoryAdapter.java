@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.kasungunathilaka.domain.MemberSubscription;
@@ -87,26 +88,30 @@ public class MembershipHistoryAdapter extends RecyclerView.Adapter<MembershipHis
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvHistory;
+        TextView tvFrom;
+        TextView tvTo;
+        LinearLayout llHistory;
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
-            tvHistory = (TextView) itemLayoutView.findViewById(R.id.tvHistory);
+            tvFrom = (TextView) itemLayoutView.findViewById(R.id.tvFrom);
+            tvTo = (TextView) itemLayoutView.findViewById(R.id.tvTo);
+            llHistory = (LinearLayout) itemLayoutView.findViewById(R.id.llHistory);
 
         }
 
         public void bind(final MemberSubscription memberSubscription, final OnItemLongClickListener listener) {
             if (memberSubscription.getIsActive() < 1) {
-                tvHistory.setText("FROM => " + getDate(memberSubscription.getStartDate()) +
-                        " TO => " + getDate(memberSubscription.getEndDate()));
+                tvFrom.setText(getDate(memberSubscription.getStartDate()));
+                tvTo.setText(getDate(memberSubscription.getEndDate()));
             } else if (Calendar.getInstance().getTime().after(memberSubscription.getEndDate())) {
-                tvHistory.setText("FROM => " + getDate(memberSubscription.getStartDate()) +
-                        " TO => " + getDate(memberSubscription.getEndDate()) + " Current(Expired)");
-                tvHistory.setTextColor(Color.RED);
+                tvFrom.setText(getDate(memberSubscription.getStartDate()));
+                tvTo.setText(getDate(memberSubscription.getEndDate()));
+                llHistory.setBackgroundColor(Color.parseColor("#FF4500"));
             } else {
-                tvHistory.setText("FROM => " + getDate(memberSubscription.getStartDate()) +
-                        " TO => " + getDate(memberSubscription.getEndDate()) + " Active");
-                tvHistory.setTextColor(Color.GREEN);
+                tvFrom.setText(getDate(memberSubscription.getStartDate()));
+                tvTo.setText(getDate(memberSubscription.getEndDate()));
+                llHistory.setBackgroundColor(Color.parseColor("#9ACD32"));
             }
 
             itemView.setOnLongClickListener(new View.OnLongClickListener() {

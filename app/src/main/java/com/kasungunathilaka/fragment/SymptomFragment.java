@@ -133,7 +133,6 @@ public class SymptomFragment extends Fragment {
             public ViewHolder(View itemLayoutView) {
                 super(itemLayoutView);
                 tv = (TextView) itemLayoutView.findViewById(R.id.tv);
-                iv = (ImageView) itemLayoutView.findViewById(R.id.iv);
 
             }
 
@@ -141,13 +140,13 @@ public class SymptomFragment extends Fragment {
                 tv.setText(memberSymptom.getDescription());
                 switch (memberSymptom.getCondition()){
                     case "Normal":
-                        iv.setBackgroundColor(Color.GREEN);
+                        tv.setBackgroundColor(Color.parseColor("#9ACD32"));
                         break;
                     case "Priority":
-                        iv.setBackgroundColor(Color.YELLOW);
+                        tv.setBackgroundColor(Color.parseColor("#FFFF00"));
                         break;
                     case "Critical":
-                        iv.setBackgroundColor(Color.RED);
+                        tv.setBackgroundColor(Color.parseColor("#FF4500"));
                         break;
                 }
                 itemView.setOnClickListener(new View.OnClickListener() {
