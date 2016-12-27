@@ -35,7 +35,6 @@
         android:layout_marginTop="50dp"
         android:gravity="center"
         android:padding="16dp"
-        android:text="Gym Partner v1.0"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textStyle="bold"
         android:textColor="@color/Black"/>

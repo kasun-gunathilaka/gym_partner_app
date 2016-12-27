@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.kasungunathilaka.gympartner.BuildConfig;
 import com.kasungunathilaka.gympartner.MainActivity;
 import com.kasungunathilaka.gympartner.R;
 import com.kasungunathilaka.showcase.MaterialShowcaseSequence;
@@ -57,6 +58,7 @@ public class AboutDialog {
         alertDialogBuilder.setView(dialogView);
         ImageView ivClose = (ImageView) dialogView.findViewById(R.id.ivClose);
         final Button bAboutDeveloper = (Button) dialogView.findViewById(R.id.bAboutDeveloper);
+        ((TextView) dialogView.findViewById(R.id.tvName)).setText("Gym Partner v" + BuildConfig.VERSION_NAME);
         final AlertDialog parentAlertDialog = alertDialogBuilder.create();
         bAboutDeveloper.setOnTouchListener(new View.OnTouchListener() {
             @Override
