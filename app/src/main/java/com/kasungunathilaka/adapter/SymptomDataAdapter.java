@@ -87,11 +87,12 @@ public class SymptomDataAdapter extends RecyclerView.Adapter<SymptomDataAdapter.
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView tv;
-        ImageView iv;
+        ImageView ivSymptom;
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
             tv = (TextView) itemLayoutView.findViewById(R.id.tv);
+            ivSymptom = (ImageView) itemLayoutView.findViewById(R.id.ivSymptom);
 
         }
 
@@ -99,13 +100,13 @@ public class SymptomDataAdapter extends RecyclerView.Adapter<SymptomDataAdapter.
             tv.setText(memberSymptom.getDescription());
             switch (memberSymptom.getCondition()) {
                 case "Normal":
-                    tv.setBackgroundColor(Color.parseColor("#9ACD32"));
+                    ivSymptom.setBackgroundColor(Color.parseColor("#9ACD32"));
                     break;
                 case "Priority":
-                    tv.setBackgroundColor(Color.parseColor("#FFFF00"));
+                    ivSymptom.setBackgroundColor(Color.parseColor("#FFFF00"));
                     break;
                 case "Critical":
-                    tv.setBackgroundColor(Color.parseColor("#FF4500"));
+                    ivSymptom.setBackgroundColor(Color.parseColor("#FF4500"));
                     break;
             }
             itemView.setOnLongClickListener(new View.OnLongClickListener() {

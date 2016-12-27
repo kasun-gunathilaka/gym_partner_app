@@ -65,6 +65,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
+            android:id="@+id/llDetailLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -127,12 +128,12 @@
 
                     <Button
                         android:id="@+id/bEmergencyContact"
-                        style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+                        style="@style/Base.Widget.AppCompat.Button.Colored"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Add Emergency Contact"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginBottom="8dp"/>
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="5dp"/>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
@@ -168,11 +169,11 @@
 
                     <Button
                         android:id="@+id/bSymptom"
-                        style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+                        style="@style/Base.Widget.AppCompat.Button.Colored"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Add Symptom"
-                        android:layout_marginLeft="8dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_marginBottom="8dp"/>
 
                 </LinearLayout>

@@ -40,6 +40,7 @@ import com.kasungunathilaka.dialog.MembershipDialog;
 import com.kasungunathilaka.domain.Member;
 import com.kasungunathilaka.domain.MemberSubscription;
 import com.kasungunathilaka.domain.Subscription;
+import com.kasungunathilaka.gympartner.BaseActivity;
 import com.kasungunathilaka.gympartner.MemberDetailActivity;
 import com.kasungunathilaka.gympartner.MembershipActivity;
 import com.kasungunathilaka.gympartner.R;
@@ -86,7 +87,7 @@ import java.util.Date;
 // limitations under the License.
 // </license>
 
-public class MembershipListActivity extends AppCompatActivity implements MembershipAdapter.OnItemClickListener, View.OnClickListener {
+public class MembershipListActivity extends BaseActivity implements MembershipAdapter.OnItemClickListener, View.OnClickListener {
 
     //region Class Members
     private RecyclerView mRecyclerView;

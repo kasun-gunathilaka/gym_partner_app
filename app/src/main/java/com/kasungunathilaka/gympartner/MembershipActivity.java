@@ -93,7 +93,7 @@ import java.util.Calendar;
 // limitations under the License.
 // </license>
 
-public class MembershipActivity extends AppCompatActivity implements View.OnClickListener {
+public class MembershipActivity extends BaseActivity implements View.OnClickListener {
 
     //region Class Members
     private static final int cameraData = 0;

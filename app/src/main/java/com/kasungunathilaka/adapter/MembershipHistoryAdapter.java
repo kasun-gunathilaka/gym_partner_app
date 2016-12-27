@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -90,13 +91,13 @@ public class MembershipHistoryAdapter extends RecyclerView.Adapter<MembershipHis
 
         TextView tvFrom;
         TextView tvTo;
-        LinearLayout llHistory;
+        ImageView ivHistory;
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
             tvFrom = (TextView) itemLayoutView.findViewById(R.id.tvFrom);
             tvTo = (TextView) itemLayoutView.findViewById(R.id.tvTo);
-            llHistory = (LinearLayout) itemLayoutView.findViewById(R.id.llHistory);
+            ivHistory = (ImageView) itemLayoutView.findViewById(R.id.ivHistory);
 
         }
 
@@ -107,11 +108,11 @@ public class MembershipHistoryAdapter extends RecyclerView.Adapter<MembershipHis
             } else if (Calendar.getInstance().getTime().after(memberSubscription.getEndDate())) {
                 tvFrom.setText(getDate(memberSubscription.getStartDate()));
                 tvTo.setText(getDate(memberSubscription.getEndDate()));
-                llHistory.setBackgroundColor(Color.parseColor("#FF4500"));
+                ivHistory.setBackgroundColor(Color.parseColor("#FF4500"));
             } else {
                 tvFrom.setText(getDate(memberSubscription.getStartDate()));
                 tvTo.setText(getDate(memberSubscription.getEndDate()));
-                llHistory.setBackgroundColor(Color.parseColor("#9ACD32"));
+                ivHistory.setBackgroundColor(Color.parseColor("#9ACD32"));
             }
 
             itemView.setOnLongClickListener(new View.OnLongClickListener() {

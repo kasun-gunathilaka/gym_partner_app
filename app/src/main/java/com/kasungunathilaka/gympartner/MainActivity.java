@@ -85,7 +85,7 @@ import java.util.Locale;
 // limitations under the License.
 // </license>
 
-public class MainActivity extends AppCompatActivity implements MemberDataAdapter.OnItemClickListener, MemberDataAdapter.OnItemLongClickListener, View.OnClickListener {
+public class MainActivity extends BaseActivity implements MemberDataAdapter.OnItemClickListener, MemberDataAdapter.OnItemLongClickListener, View.OnClickListener {
 
     //region Class Members
     private FloatingActionsMenu fabMenu;

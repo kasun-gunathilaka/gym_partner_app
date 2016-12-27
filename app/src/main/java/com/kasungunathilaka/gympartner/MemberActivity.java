@@ -89,7 +89,7 @@ import java.util.Date;
 // limitations under the License.
 // </license>
 
-public class MemberActivity extends AppCompatActivity implements View.OnClickListener {
+public class MemberActivity extends BaseActivity implements View.OnClickListener {
 
     //region Class Members
     private static final int cameraData = 0;

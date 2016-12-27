@@ -31,6 +31,7 @@ import com.kasungunathilaka.business.MemberSubscriptionBusiness;
 import com.kasungunathilaka.dialog.AboutDialog;
 import com.kasungunathilaka.domain.Member;
 import com.kasungunathilaka.domain.MemberSubscription;
+import com.kasungunathilaka.gympartner.BaseActivity;
 import com.kasungunathilaka.gympartner.MemberActivity;
 import com.kasungunathilaka.gympartner.MemberDetailActivity;
 import com.kasungunathilaka.gympartner.R;
@@ -72,7 +73,7 @@ import java.util.ArrayList;
 // limitations under the License.
 // </license>
 
-public class MemberListActivity extends AppCompatActivity implements MemberDataAdapter.OnItemClickListener, MemberDataAdapter.OnItemLongClickListener {
+public class MemberListActivity extends BaseActivity implements MemberDataAdapter.OnItemClickListener, MemberDataAdapter.OnItemLongClickListener {
 
     //region Class Members
     private RecyclerView rvMemberList;

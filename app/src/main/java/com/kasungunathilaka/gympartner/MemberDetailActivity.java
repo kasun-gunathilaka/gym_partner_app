@@ -71,7 +71,7 @@ import java.util.ArrayList;
 // limitations under the License.
 // </license>
 
-public class MemberDetailActivity extends AppCompatActivity {
+public class MemberDetailActivity extends BaseActivity {
 
     //region Class Members
     private Member currentMember = null;

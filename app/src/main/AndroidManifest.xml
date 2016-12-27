@@ -82,7 +82,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="com.kasungunathilaka.gympartner.SETTINGS_CHANGE"/>
+                <action android:name="com.kasungunathilaka.gympartner.SETTINGS_CHANGE" />
             </intent-filter>
         </receiver>
 
@@ -111,13 +111,16 @@
             android:name="com.sec.android.multiwindow.MINIMUM_SIZE_H"
             android:resource="@dimen/app_minimumsize_h" />
 
-        <!--<meta-data-->
-        <!--android:name="com.google.android.backup.api_key"-->
-        <!--android:value="AEdPqrEAAAAIlp_3uClNOx7PewLFsoQOUP2obNBLYMwduw9CtA" />-->
+        <!-- <meta-data -->
+        <!-- android:name="com.google.android.backup.api_key" -->
+        <!-- android:value="AEdPqrEAAAAIlp_3uClNOx7PewLFsoQOUP2obNBLYMwduw9CtA" /> -->
 
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings" />
+        <activity
+            android:name=".BaseActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

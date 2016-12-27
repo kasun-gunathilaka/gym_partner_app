@@ -33,6 +33,7 @@ import com.kasungunathilaka.business.SubscriptionBusiness;
 import com.kasungunathilaka.dialog.AboutDialog;
 import com.kasungunathilaka.domain.MemberSubscription;
 import com.kasungunathilaka.domain.Subscription;
+import com.kasungunathilaka.gympartner.BaseActivity;
 import com.kasungunathilaka.gympartner.R;
 import com.kasungunathilaka.gympartner.SettingsActivity;
 import com.kasungunathilaka.showcase.MaterialShowcaseSequence;
@@ -72,7 +73,7 @@ import java.util.ArrayList;
 // limitations under the License.
 // </license>
 
-public class SubscriptionListActivity extends AppCompatActivity implements SubscriptionAdapter.OnItemClickListener, View.OnClickListener, SubscriptionAdapter.OnItemLongClickListener {
+public class SubscriptionListActivity extends BaseActivity implements SubscriptionAdapter.OnItemClickListener, View.OnClickListener, SubscriptionAdapter.OnItemLongClickListener {
 
     //region Class Members
     private RecyclerView mRecyclerView;
