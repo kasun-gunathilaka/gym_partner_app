@@ -2,12 +2,14 @@ package com.kasungunathilaka.gympartner;
 
 //region Imported
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.backup.BackupManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -15,8 +17,13 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,6 +41,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 
 import com.kasungunathilaka.adapter.EmergencyContactDataAdapter;
@@ -93,6 +101,7 @@ public class MemberActivity extends BaseActivity implements View.OnClickListener
 
     //region Class Members
     private static final int cameraData = 0;
+    private CoordinatorLayout rootView;
     private ImageView ivMemberPicture;
     private EditText etName, etNic, etContactNo, etAddress, etBirthday, etAge, etBloodType;
     private Button bEmergencyContact, bSymptom;
@@ -169,8 +178,22 @@ public class MemberActivity extends BaseActivity implements View.OnClickListener
         Intent intent;
         switch (v.getId()) {
             case R.id.fabCamera:
-                intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, cameraData);
+                if (ContextCompat.checkSelfPermission(MemberActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+                        Snackbar.make(rootView, "Permission was denied to the camera", Snackbar.LENGTH_LONG)
+                                .setAction("Allow", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        ActivityCompat.requestPermissions(MemberActivity.this, new String[]{Manifest.permission.CAMERA}, getResources().getInteger(R.integer.ACCESS_CAMERA));
+                                    }
+                                }).show();
+                    } else {
+                        ActivityCompat.requestPermissions(MemberActivity.this, new String[]{Manifest.permission.CAMERA}, getResources().getInteger(R.integer.ACCESS_CAMERA));
+                    }
+                } else {
+                    intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, cameraData);
+                }
                 break;
             case R.id.bEmergencyContact:
                 addEmergencyContact();
@@ -338,11 +361,34 @@ public class MemberActivity extends BaseActivity implements View.OnClickListener
         outState.putSerializable("memberEmergencyContactList", memberEmergencyContactList);
         super.onSaveInstanceState(outState);
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 6: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, cameraData);
+                } else {
+                    Snackbar.make(rootView, "Permission was denied to the camera", Snackbar.LENGTH_LONG)
+                            .setAction("Allow", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    ActivityCompat.requestPermissions(MemberActivity.this, new String[]{Manifest.permission.CAMERA}, getResources().getInteger(R.integer.ACCESS_CAMERA));
+                                }
+                            }).show();
+                }
+                return;
+            }
+        }
+    }
+
     //endregion
 
     //region Private Methods
     private void initialize() {
 
+        rootView = (CoordinatorLayout) findViewById(R.id.main_content);
         ivMemberPicture = (ImageView) findViewById(R.id.ivMemberPicture);
         etName = (EditText) findViewById(R.id.etName);
         etNic = (EditText) findViewById(R.id.etNic);

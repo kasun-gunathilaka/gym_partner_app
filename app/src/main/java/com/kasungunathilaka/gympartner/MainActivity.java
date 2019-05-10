@@ -2,13 +2,21 @@ package com.kasungunathilaka.gympartner;
 
 //region Imported
 
+import android.Manifest;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.media.audiofx.Equalizer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -53,7 +61,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 //endregion
 
 // </summary>
@@ -103,7 +114,13 @@ public class MainActivity extends BaseActivity implements MemberDataAdapter.OnIt
     SimpleDateFormat stringFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
     AlertDialog firstDialog;
     int notificationId = 0001;
+    String[] appPermission = {
+            Manifest.permission.SEND_SMS,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+    };
 
+    private static final int PERMISSION_REQUEST_CODE = 1240;
     //endregion
 
     //region Overridden Methods
@@ -138,6 +155,11 @@ public class MainActivity extends BaseActivity implements MemberDataAdapter.OnIt
                 setCalendar(firstDayOfNewMonth);
             }
         });
+
+        if (checkAndRequestPermissions()) {
+            welComeDialog();
+        }
+
     }
 
     @Override
@@ -202,7 +224,6 @@ public class MainActivity extends BaseActivity implements MemberDataAdapter.OnIt
         } catch (Exception e) {
             e.printStackTrace();
         }
-        welComeDialog();
     }
 
     @Override
@@ -317,6 +338,77 @@ public class MainActivity extends BaseActivity implements MemberDataAdapter.OnIt
                 cvMainCalendar.showPreviousMonth();
                 setCalendar(cvMainCalendar.getFirstDayOfCurrentMonth());
                 break;
+
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            HashMap<String, Integer> permissionResult = new HashMap<>();
+            int deniedCount = 0;
+
+            for (int i = 0; i < grantResults.length; i++) {
+                if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                    permissionResult.put(permissions[i], grantResults[i]);
+                    deniedCount++;
+                }
+            }
+
+            if (deniedCount == 0) {
+                welComeDialog();
+            } else {
+                for (Map.Entry<String, Integer> entry : permissionResult.entrySet()) {
+                    String permName = entry.getKey();
+                    int permResult = entry.getValue();
+
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(this, permName)) {
+                        showDialog("", "This app needs storage and Message sending permission to work without any problems."
+                                , "Yes, Grant permissions"
+                                , new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                        checkAndRequestPermissions();
+                                    }
+                                }
+                                , "No, Exit app"
+                                , new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        finish();
+                                        System.exit(0);
+                                    }
+                                }
+                                , false);
+
+                    } else {
+                        showDialog("", "You have denied some permissions. Allow all permissions at [Setting] > [Permissions]"
+                                , "Go to Settings"
+                                , new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                                Uri.fromParts("package", getPackageName(), null));
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
+                                        finish();
+                                        System.exit(0);
+                                    }
+                                }
+                                , "No, Exit app"
+                                , new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        finish();
+                                        System.exit(0);
+                                    }
+                                }, false);
+                    }
+                    break;
+                }
+            }
+
 
         }
     }
@@ -537,7 +629,7 @@ public class MainActivity extends BaseActivity implements MemberDataAdapter.OnIt
 
     }
 
-    private void welComeDialog(){
+    private void welComeDialog() {
         PrefsManager mPrefsManager = new PrefsManager(MainActivity.this, SharedPreferencesName.MAIN_ACTIVITY_LAUNCH);
         int result = mPrefsManager.getSequenceStatus();
         if (result == 0) {
@@ -574,7 +666,7 @@ public class MainActivity extends BaseActivity implements MemberDataAdapter.OnIt
         }
     }
 
-    private void exitDialogDisplay(){
+    private void exitDialogDisplay() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
         LayoutInflater inflater = this.getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_view_exit, null);
@@ -604,6 +696,39 @@ public class MainActivity extends BaseActivity implements MemberDataAdapter.OnIt
             }
         });
         alertDialog.show();
+    }
+
+    private boolean checkAndRequestPermissions() {
+
+        List<String> listPermissionNeed = new ArrayList<>();
+        for (String permission : appPermission) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                listPermissionNeed.add(permission);
+            }
+        }
+        if (!listPermissionNeed.isEmpty()) {
+            ActivityCompat.requestPermissions(this, listPermissionNeed.toArray(new String[listPermissionNeed.size()]), PERMISSION_REQUEST_CODE);
+            return false;
+        }
+        return true;
+    }
+
+    private AlertDialog showDialog(String title
+            , String msg
+            , String positiveLable
+            , DialogInterface.OnClickListener positiveOnClick
+            , String negativeLable
+            , DialogInterface.OnClickListener negativeOnClick
+            , boolean isCancelAble) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setCancelable(isCancelAble);
+        builder.setMessage(msg);
+        builder.setPositiveButton(positiveLable, positiveOnClick);
+        builder.setNegativeButton(negativeLable, negativeOnClick);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        return alertDialog;
     }
     //endregion
 

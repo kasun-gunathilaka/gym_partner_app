@@ -3,4 +3,7 @@
     <integer name="Renew">1</integer>
     <integer name="Edit">2</integer>
     <integer name="View">3</integer>
+    <integer name="SEND_SMS">4</integer>
+    <integer name="ACCESS_STORAGE">5</integer>
+    <integer name="ACCESS_CAMERA">6</integer>
 </resources>
