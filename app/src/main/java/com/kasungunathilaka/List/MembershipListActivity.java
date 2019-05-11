@@ -330,9 +330,9 @@ public class MembershipListActivity extends BaseActivity implements MembershipAd
             case android.R.id.home:
                 finish();
                 break;
-            case R.id.menu_message:
-                sendMessages();
-                break;
+//            case R.id.menu_message:
+//                sendMessages();
+//                break;
             case R.id.menu_settings:
                 startActivity(new Intent(MembershipListActivity.this, SettingsActivity.class));
                 break;
@@ -408,99 +408,99 @@ public class MembershipListActivity extends BaseActivity implements MembershipAd
         return formatedDate;
     }
 
-    private void sendMessages() {
-        final ArrayList<String> numbers = new ArrayList<String>();
-        final SmsManager sms = SmsManager.getDefault();
-        for (MemberSubscription memberSubscription : memberSubscriptionList) {
-            Calendar presentCalender = Calendar.getInstance();
-            Calendar memberCalender = Calendar.getInstance();
-            memberCalender.setTime(memberSubscription.getEndDate());
-            if (presentCalender.after(memberCalender)) {
-                numbers.add(memberSubscription.getMember().getContactNo());
-            }
-        }
-
-        if (numbers.size() == 1) {
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MembershipListActivity.this);
-            LayoutInflater inflater = this.getLayoutInflater();
-            View dialogView = inflater.inflate(R.layout.dialog_view_default, null);
-            alertDialogBuilder.setView(dialogView);
-            TextView tvTitle = (TextView) dialogView.findViewById(R.id.tvTitle);
-            TextView tvMessage = (TextView) dialogView.findViewById(R.id.tvMessage);
-            ImageView ivSave = (ImageView) dialogView.findViewById(R.id.ivSave);
-            ImageView ivClose = (ImageView) dialogView.findViewById(R.id.ivClose);
-            tvTitle.setText("Message Confirmation");
-            tvMessage.setText("Only one expired member. Send a message ?");
-            final AlertDialog alertDialog = alertDialogBuilder.create();
-            ivSave.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                        try {
-                            sms.sendTextMessage(numbers.get(0), null, sharedPreferences.getString("message", getString(R.string.message_expired_membership_sms)), null, null);
-                            alertDialog.dismiss();
-                            Toast.makeText(MembershipListActivity.this, "Message sent to " + numbers.get(0), Toast.LENGTH_SHORT).show();
-                        } catch (Exception e) {
-                            Toast.makeText(MembershipListActivity.this, "Message Sending failed to " + numbers.get(0), Toast.LENGTH_SHORT).show();
-                            e.printStackTrace();
-                        }
-                    }
-                    return false;
-                }
-
-            });
-            ivClose.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                        alertDialog.dismiss();
-                    }
-                    return false;
-                }
-            });
-            alertDialog.show();
-
-
-        } else if (numbers.size() > 1) {
-            final AlertDialog.Builder builder = new AlertDialog.Builder(MembershipListActivity.this, R.style.Base_CustomDialogAppTheme);
-            CharSequence[] option = new CharSequence[]{"To All Members", "Select One Member"};
-            builder.setItems(option, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    if (which == 0) {
-                        ProgressDialog loading = new ProgressDialog(MembershipListActivity.this);
-                        loading.setCancelable(true);
-                        loading.setMessage("Sending Messages..");
-                        loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                        loading.show();
-                        for (String number : numbers) {
-                            try {
-                                sms.sendTextMessage(number, null, sharedPreferences.getString("message", getString(R.string.message_expired_membership_sms)), null, null);
-                                Toast.makeText(MembershipListActivity.this, "Message sent to " + number, Toast.LENGTH_SHORT).show();
-                            } catch (Exception e) {
-                                Toast.makeText(MembershipListActivity.this, "Message Sending failed to " + number, Toast.LENGTH_SHORT).show();
-                                e.printStackTrace();
-                            }
-                        }
-                        loading.dismiss();
-                        dialog.cancel();
-                    } else {
-                        final AlertDialog.Builder builder = new AlertDialog.Builder(MembershipListActivity.this, R.style.Base_CustomDialogAppTheme);
-                        builder.setItems(numbers.toArray(new CharSequence[numbers.size()]), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                sms.sendTextMessage(numbers.get(which), null, sharedPreferences.getString("message", getString(R.string.message_expired_membership_sms)), null, null);
-                                Toast.makeText(MembershipListActivity.this, "Message sent to " + numbers.get(which), Toast.LENGTH_SHORT).show();
-                                dialog.cancel();
-                            }
-                        });
-                        builder.show();
-                    }
-                }
-            });
-            builder.show();
-        }
-    }
+//    private void sendMessages() {
+//        final ArrayList<String> numbers = new ArrayList<String>();
+//        final SmsManager sms = SmsManager.getDefault();
+//        for (MemberSubscription memberSubscription : memberSubscriptionList) {
+//            Calendar presentCalender = Calendar.getInstance();
+//            Calendar memberCalender = Calendar.getInstance();
+//            memberCalender.setTime(memberSubscription.getEndDate());
+//            if (presentCalender.after(memberCalender)) {
+//                numbers.add(memberSubscription.getMember().getContactNo());
+//            }
+//        }
+//
+//        if (numbers.size() == 1) {
+//            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MembershipListActivity.this);
+//            LayoutInflater inflater = this.getLayoutInflater();
+//            View dialogView = inflater.inflate(R.layout.dialog_view_default, null);
+//            alertDialogBuilder.setView(dialogView);
+//            TextView tvTitle = (TextView) dialogView.findViewById(R.id.tvTitle);
+//            TextView tvMessage = (TextView) dialogView.findViewById(R.id.tvMessage);
+//            ImageView ivSave = (ImageView) dialogView.findViewById(R.id.ivSave);
+//            ImageView ivClose = (ImageView) dialogView.findViewById(R.id.ivClose);
+//            tvTitle.setText("Message Confirmation");
+//            tvMessage.setText("Only one expired member. Send a message ?");
+//            final AlertDialog alertDialog = alertDialogBuilder.create();
+//            ivSave.setOnTouchListener(new View.OnTouchListener() {
+//                @Override
+//                public boolean onTouch(View v, MotionEvent event) {
+//                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+//                        try {
+//                            sms.sendTextMessage(numbers.get(0), null, sharedPreferences.getString("message", getString(R.string.message_expired_membership_sms)), null, null);
+//                            alertDialog.dismiss();
+//                            Toast.makeText(MembershipListActivity.this, "Message sent to " + numbers.get(0), Toast.LENGTH_SHORT).show();
+//                        } catch (Exception e) {
+//                            Toast.makeText(MembershipListActivity.this, "Message Sending failed to " + numbers.get(0), Toast.LENGTH_SHORT).show();
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                    return false;
+//                }
+//
+//            });
+//            ivClose.setOnTouchListener(new View.OnTouchListener() {
+//                @Override
+//                public boolean onTouch(View v, MotionEvent event) {
+//                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+//                        alertDialog.dismiss();
+//                    }
+//                    return false;
+//                }
+//            });
+//            alertDialog.show();
+//
+//
+//        } else if (numbers.size() > 1) {
+//            final AlertDialog.Builder builder = new AlertDialog.Builder(MembershipListActivity.this, R.style.Base_CustomDialogAppTheme);
+//            CharSequence[] option = new CharSequence[]{"To All Members", "Select One Member"};
+//            builder.setItems(option, new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    if (which == 0) {
+//                        ProgressDialog loading = new ProgressDialog(MembershipListActivity.this);
+//                        loading.setCancelable(true);
+//                        loading.setMessage("Sending Messages..");
+//                        loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//                        loading.show();
+//                        for (String number : numbers) {
+//                            try {
+//                                sms.sendTextMessage(number, null, sharedPreferences.getString("message", getString(R.string.message_expired_membership_sms)), null, null);
+//                                Toast.makeText(MembershipListActivity.this, "Message sent to " + number, Toast.LENGTH_SHORT).show();
+//                            } catch (Exception e) {
+//                                Toast.makeText(MembershipListActivity.this, "Message Sending failed to " + number, Toast.LENGTH_SHORT).show();
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                        loading.dismiss();
+//                        dialog.cancel();
+//                    } else {
+//                        final AlertDialog.Builder builder = new AlertDialog.Builder(MembershipListActivity.this, R.style.Base_CustomDialogAppTheme);
+//                        builder.setItems(numbers.toArray(new CharSequence[numbers.size()]), new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                sms.sendTextMessage(numbers.get(which), null, sharedPreferences.getString("message", getString(R.string.message_expired_membership_sms)), null, null);
+//                                Toast.makeText(MembershipListActivity.this, "Message sent to " + numbers.get(which), Toast.LENGTH_SHORT).show();
+//                                dialog.cancel();
+//                            }
+//                        });
+//                        builder.show();
+//                    }
+//                }
+//            });
+//            builder.show();
+//        }
+//    }
 
     private LayoutInflater layoutInflater() {
         return this.getLayoutInflater();

@@ -115,7 +115,6 @@ public class MainActivity extends BaseActivity implements MemberDataAdapter.OnIt
     AlertDialog firstDialog;
     int notificationId = 0001;
     String[] appPermission = {
-            Manifest.permission.SEND_SMS,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
     };

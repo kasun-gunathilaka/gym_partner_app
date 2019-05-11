@@ -16,11 +16,11 @@
         android:title="Settings"
         app:showAsAction="never" />
 
-    <item
-        android:id="@+id/menu_message"
-        android:orderInCategory="100"
-        android:title="Send expired information messages"
-        app:showAsAction="never" />
+    <!--<item-->
+        <!--android:id="@+id/menu_message"-->
+        <!--android:orderInCategory="100"-->
+        <!--android:title="Send expired information messages"-->
+        <!--app:showAsAction="never" />-->
 
     <item
         android:id="@+id/menu_about"
