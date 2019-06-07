@@ -10,9 +10,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SearchRecentSuggestionsProvider;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.SearchRecentSuggestions;
+import android.provider.Telephony;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -330,9 +333,9 @@ public class MembershipListActivity extends BaseActivity implements MembershipAd
             case android.R.id.home:
                 finish();
                 break;
-//            case R.id.menu_message:
-//                sendMessages();
-//                break;
+            case R.id.menu_message:
+                sendMessages();
+                break;
             case R.id.menu_settings:
                 startActivity(new Intent(MembershipListActivity.this, SettingsActivity.class));
                 break;
@@ -408,99 +411,129 @@ public class MembershipListActivity extends BaseActivity implements MembershipAd
         return formatedDate;
     }
 
-//    private void sendMessages() {
-//        final ArrayList<String> numbers = new ArrayList<String>();
-//        final SmsManager sms = SmsManager.getDefault();
-//        for (MemberSubscription memberSubscription : memberSubscriptionList) {
-//            Calendar presentCalender = Calendar.getInstance();
-//            Calendar memberCalender = Calendar.getInstance();
-//            memberCalender.setTime(memberSubscription.getEndDate());
-//            if (presentCalender.after(memberCalender)) {
-//                numbers.add(memberSubscription.getMember().getContactNo());
-//            }
-//        }
-//
-//        if (numbers.size() == 1) {
-//            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MembershipListActivity.this);
-//            LayoutInflater inflater = this.getLayoutInflater();
-//            View dialogView = inflater.inflate(R.layout.dialog_view_default, null);
-//            alertDialogBuilder.setView(dialogView);
-//            TextView tvTitle = (TextView) dialogView.findViewById(R.id.tvTitle);
-//            TextView tvMessage = (TextView) dialogView.findViewById(R.id.tvMessage);
-//            ImageView ivSave = (ImageView) dialogView.findViewById(R.id.ivSave);
-//            ImageView ivClose = (ImageView) dialogView.findViewById(R.id.ivClose);
-//            tvTitle.setText("Message Confirmation");
-//            tvMessage.setText("Only one expired member. Send a message ?");
-//            final AlertDialog alertDialog = alertDialogBuilder.create();
-//            ivSave.setOnTouchListener(new View.OnTouchListener() {
-//                @Override
-//                public boolean onTouch(View v, MotionEvent event) {
-//                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//                        try {
-//                            sms.sendTextMessage(numbers.get(0), null, sharedPreferences.getString("message", getString(R.string.message_expired_membership_sms)), null, null);
-//                            alertDialog.dismiss();
-//                            Toast.makeText(MembershipListActivity.this, "Message sent to " + numbers.get(0), Toast.LENGTH_SHORT).show();
-//                        } catch (Exception e) {
-//                            Toast.makeText(MembershipListActivity.this, "Message Sending failed to " + numbers.get(0), Toast.LENGTH_SHORT).show();
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                    return false;
-//                }
-//
-//            });
-//            ivClose.setOnTouchListener(new View.OnTouchListener() {
-//                @Override
-//                public boolean onTouch(View v, MotionEvent event) {
-//                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//                        alertDialog.dismiss();
-//                    }
-//                    return false;
-//                }
-//            });
-//            alertDialog.show();
-//
-//
-//        } else if (numbers.size() > 1) {
-//            final AlertDialog.Builder builder = new AlertDialog.Builder(MembershipListActivity.this, R.style.Base_CustomDialogAppTheme);
-//            CharSequence[] option = new CharSequence[]{"To All Members", "Select One Member"};
-//            builder.setItems(option, new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//                    if (which == 0) {
-//                        ProgressDialog loading = new ProgressDialog(MembershipListActivity.this);
-//                        loading.setCancelable(true);
-//                        loading.setMessage("Sending Messages..");
-//                        loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-//                        loading.show();
-//                        for (String number : numbers) {
-//                            try {
-//                                sms.sendTextMessage(number, null, sharedPreferences.getString("message", getString(R.string.message_expired_membership_sms)), null, null);
-//                                Toast.makeText(MembershipListActivity.this, "Message sent to " + number, Toast.LENGTH_SHORT).show();
-//                            } catch (Exception e) {
-//                                Toast.makeText(MembershipListActivity.this, "Message Sending failed to " + number, Toast.LENGTH_SHORT).show();
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                        loading.dismiss();
-//                        dialog.cancel();
-//                    } else {
-//                        final AlertDialog.Builder builder = new AlertDialog.Builder(MembershipListActivity.this, R.style.Base_CustomDialogAppTheme);
-//                        builder.setItems(numbers.toArray(new CharSequence[numbers.size()]), new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                sms.sendTextMessage(numbers.get(which), null, sharedPreferences.getString("message", getString(R.string.message_expired_membership_sms)), null, null);
-//                                Toast.makeText(MembershipListActivity.this, "Message sent to " + numbers.get(which), Toast.LENGTH_SHORT).show();
-//                                dialog.cancel();
-//                            }
-//                        });
-//                        builder.show();
-//                    }
-//                }
-//            });
-//            builder.show();
-//        }
-//    }
+    private void sendMessages() {
+        final ArrayList<String> numbers = new ArrayList<String>();
+        final SmsManager sms = SmsManager.getDefault();
+        for (MemberSubscription memberSubscription : memberSubscriptionList) {
+            Calendar presentCalender = Calendar.getInstance();
+            Calendar memberCalender = Calendar.getInstance();
+            memberCalender.setTime(memberSubscription.getEndDate());
+            if (presentCalender.after(memberCalender)) {
+                numbers.add(memberSubscription.getMember().getContactNo());
+            }
+        }
+
+        if (numbers.size() == 1) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MembershipListActivity.this);
+            LayoutInflater inflater = this.getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.dialog_view_default, null);
+            alertDialogBuilder.setView(dialogView);
+            TextView tvTitle = (TextView) dialogView.findViewById(R.id.tvTitle);
+            TextView tvMessage = (TextView) dialogView.findViewById(R.id.tvMessage);
+            ImageView ivSave = (ImageView) dialogView.findViewById(R.id.ivSave);
+            ImageView ivClose = (ImageView) dialogView.findViewById(R.id.ivClose);
+            tvTitle.setText("Message Confirmation");
+            tvMessage.setText("Only one expired member. Send a message ?");
+            final AlertDialog alertDialog = alertDialogBuilder.create();
+            ivSave.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        try {
+                            launchMessage(numbers.get(0));
+                            alertDialog.dismiss();
+                            Toast.makeText(MembershipListActivity.this, "Opening message application" + numbers.get(0), Toast.LENGTH_SHORT).show();
+                        } catch (Exception e) {
+                            Toast.makeText(MembershipListActivity.this, "Opening message application failed!", Toast.LENGTH_SHORT).show();
+                            e.printStackTrace();
+                        }
+                    }
+                    return false;
+                }
+
+            });
+            ivClose.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        alertDialog.dismiss();
+                    }
+                    return false;
+                }
+            });
+            alertDialog.show();
+
+
+        } else if (numbers.size() > 1) {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(MembershipListActivity.this, R.style.Base_CustomDialogAppTheme);
+            CharSequence[] option = new CharSequence[]{"To All Members", "Select One Member"};
+            builder.setItems(option, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if (which == 0) {
+                        ProgressDialog loading = new ProgressDialog(MembershipListActivity.this);
+                        loading.setCancelable(true);
+                        loading.setMessage("Launching Messages..");
+                        loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                        loading.show();
+                        StringBuilder numberString = new StringBuilder();
+                        for (String number : numbers) {
+                            numberString = numberString.append(number + ",");
+                        }
+                        try {
+                            launchMessage(numberString.deleteCharAt(numberString.length() - 1).toString());
+                            Toast.makeText(MembershipListActivity.this, "Opening message application", Toast.LENGTH_SHORT).show();
+                        } catch (Exception e) {
+                            Toast.makeText(MembershipListActivity.this, "Opening message application failed!", Toast.LENGTH_SHORT).show();
+                            e.printStackTrace();
+                        }
+                        loading.dismiss();
+                        dialog.cancel();
+                    } else {
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(MembershipListActivity.this, R.style.Base_CustomDialogAppTheme);
+                        builder.setItems(numbers.toArray(new CharSequence[numbers.size()]), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                try {
+                                    launchMessage(numbers.get(which));
+                                    Toast.makeText(MembershipListActivity.this, "Opening message application", Toast.LENGTH_SHORT).show();
+                                } catch (Exception e) {
+                                    Toast.makeText(MembershipListActivity.this, "Opening message application failed!", Toast.LENGTH_SHORT).show();
+                                    e.printStackTrace();
+                                } finally {
+                                    dialog.cancel();
+                                }
+                            }
+                        });
+                        builder.show();
+                    }
+                }
+            });
+            builder.show();
+        }
+    }
+
+    private void launchMessage(String numbers) throws Exception {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(MembershipListActivity.this); // Need to change the build to API 19
+            Intent sendIntent = new Intent(Intent.ACTION_SENDTO);
+            sendIntent.setType("text/plain");
+            sendIntent.setData(Uri.parse("smsto:" + numbers));
+            sendIntent.putExtra("sms_body", sharedPreferences.getString("message", getString(R.string.message_expired_membership_sms)));
+            if (defaultSmsPackageName != null) {
+                sendIntent.setPackage(defaultSmsPackageName);
+            }
+            startActivity(sendIntent);
+
+        } else {
+            Intent smsIntent = new Intent(android.content.Intent.ACTION_VIEW);
+            smsIntent.setType("vnd.android-dir/mms-sms");
+            smsIntent.putExtra("address", numbers);
+            smsIntent.putExtra("sms_body", sharedPreferences.getString("message", getString(R.string.message_expired_membership_sms)));
+            startActivity(smsIntent);
+        }
+    }
+
 
     private LayoutInflater layoutInflater() {
         return this.getLayoutInflater();

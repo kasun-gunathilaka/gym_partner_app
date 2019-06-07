@@ -155,8 +155,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     protected boolean isValidFragment(String fragmentName) {
         return PreferenceFragment.class.getName().equals(fragmentName)
                 || DataBackupPreferenceFragment.class.getName().equals(fragmentName)
-                || NotificationPreferenceFragment.class.getName().equals(fragmentName);
-                //|| MessagePreferenceFragment.class.getName().equals(fragmentName);
+                || NotificationPreferenceFragment.class.getName().equals(fragmentName)
+                || MessagePreferenceFragment.class.getName().equals(fragmentName);
     }
     //endregion
 
@@ -319,26 +319,26 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
     }
 
-//    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-//    public static class MessagePreferenceFragment extends PreferenceFragment {
-//        @Override
-//        public void onCreate(Bundle savedInstanceState) {
-//            super.onCreate(savedInstanceState);
-//            addPreferencesFromResource(R.xml.pref_message);
-//            setHasOptionsMenu(true);
-//
-//            bindPreferenceSummaryToValue(findPreference("message"));
-//        }
-//
-//        @Override
-//        public boolean onOptionsItemSelected(MenuItem item) {
-//            int id = item.getItemId();
-//            if (id == android.R.id.home) {
-//                startActivity(new Intent(getActivity(), SettingsActivity.class));
-//                return true;
-//            }
-//            return super.onOptionsItemSelected(item);
-//        }
-//    }
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class MessagePreferenceFragment extends PreferenceFragment {
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.pref_message);
+            setHasOptionsMenu(true);
+
+            bindPreferenceSummaryToValue(findPreference("message"));
+        }
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            int id = item.getItemId();
+            if (id == android.R.id.home) {
+                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                return true;
+            }
+            return super.onOptionsItemSelected(item);
+        }
+    }
     //endregion
 }
